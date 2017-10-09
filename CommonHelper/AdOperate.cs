@@ -15,6 +15,8 @@ namespace CommonHelper
         private string Password { get; set; }
         private ADConfig ADC { get; set; }
 
+        public AdOperate(){ }
+
         public AdOperate(string filePath)
         {
             ADC = Helper.DeserializeFromXML<ADConfig>(filePath);
@@ -105,6 +107,21 @@ namespace CommonHelper
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        public bool CheckADUser(string domainPath, string adminUser, string password)
+        {
+            try
+            {
+                DirectoryEntry domain = new DirectoryEntry(domainPath, adminUser, password);
+                domain.AuthenticationType = AuthenticationTypes.Secure;
+                domain.RefreshCache();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
 
