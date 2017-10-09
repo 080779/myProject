@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //$.getJSON("http://192.168.31.134:8084/api/main", function (result) {
+            //    alert(result);
+            //});
+            $.ajax({
+                url: "http://192.168.31.134:8084/api/main", type: "get",
+                success:function(result)
+                {
+                    $.each(result, function (key,value) {
+                        alert(value.Name);
+                    });
+                },
+                error:function()
+                {
+                    alert("网络错误");
+                }
+            });
+        })
+    </script>
+</head>
+<body>
+    <form action="http://192.168.31.134:8083/main/index" method="post">
+        <input type="text" name="userName" value="zhoujie" />
+        <input type="submit" value="提交" />
+    </form>
+</body>
+</html>
