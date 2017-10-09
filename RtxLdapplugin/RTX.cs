@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using RTXSAPILib;
 using System.Diagnostics;
+using CommonHelper;
 
-namespace CommonHelper
+namespace RtxLdapplugin
 {
 
-    class RTX
+    public class RTX
     {
         RTXSAPILib.RTXSAPIRootObj RootObj; //声明一个根对象
         RTXSAPILib.RTXSAPIUserAuthObj UserAuthObj; //声明一个用户认证对象
@@ -22,20 +23,22 @@ namespace CommonHelper
             RootObj.ServerIP = "127.0.0.1";
             RootObj.ServerPort = Convert.ToInt16("8006");
             UserAuthObj.AppGUID = "{8E85315D-342C-417d-9093-57F824638040}"; //设置应用GUID
-            UserAuthObj.AppName = "RTX_LDAP"; //设置应用名
+            UserAuthObj.AppName = "RTX_LDAP_LUGIN"; //设置应用名
         }
 
-        public void RegApp()
+        public string RegApp()
         {
             CreateRoot();
             try
             {
                 UserAuthObj.RegisterApp();  //注册应用
-                EventLog.WriteEntry("RTX", "注册应用成功", EventLogEntryType.Information, 8811);//系统日志
+                //EventLog.WriteEntry("RTX", "注册应用成功", EventLogEntryType.Information, 8811);//系统日志
+                return "注册应用成功";
             }
             catch (Exception ex)
             {
-                EventLog.WriteEntry("RTX", "注册应用失败：" + ex.Message, EventLogEntryType.Error, 8801);//系统日志
+                //EventLog.WriteEntry("RTX", "注册应用失败：" + ex.Message, EventLogEntryType.Error, 8801);//系统日志
+                return "注册应用失败";
             }
         }
         public void UnregApp()
@@ -51,17 +54,19 @@ namespace CommonHelper
                 EventLog.WriteEntry("RTX", "注消应用失败：" + ex.Message, EventLogEntryType.Error, 8802);//系统日志
             }
         }
-        public void StartApp()
+        public string StartApp()
         {
             CreateRoot();
             try
             {
-                UserAuthObj.StartApp("", 8);  //启动应用
-                EventLog.WriteEntry("RTX", "应用启动成功", EventLogEntryType.Information, 8813);//系统日志
+                UserAuthObj.StartApp("", 4);  //启动应用
+                //EventLog.WriteEntry("RTX", "应用启动成功", EventLogEntryType.Information, 8813);//系统日志
+                return "启动应用成功";
             }
             catch (Exception ex)
             {
-                EventLog.WriteEntry("RTX", "应用启动失败：" + ex.Message, EventLogEntryType.Error, 8803);//系统日志
+                //EventLog.WriteEntry("RTX", "应用启动失败：" + ex.Message, EventLogEntryType.Error, 8803);//系统日志
+                return "启动应用失败";
             }
         }
         public void StopApp()

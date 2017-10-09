@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -62,7 +63,6 @@
     <Compile Include="OAD\Helper.cs" />
     <Compile Include="OAD\OperateAD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RTX\RTX.cs" />
     <Compile Include="RTX\RtxDeptManager.cs" />
     <Compile Include="RTX\RtxManager.cs" />
     <Compile Include="RTX\RtxUserManager.cs" />

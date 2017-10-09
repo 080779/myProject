@@ -1,4 +1,5 @@
 ﻿using CommonHelper;
+using RtxLdapplugin.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace RtxLdapplugin
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             GlobalFilters.Filters.Add(new JsonNetActionFilter());
+            //GlobalFilters.Filters.Add(new RtxFilter());
         }
     }
 }
