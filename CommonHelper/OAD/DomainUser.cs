@@ -56,6 +56,10 @@ namespace CommonHelper
         /// </summary>
         public string DisplayName { get; set; }
         /// <summary>
+        /// 旧部门
+        /// </summary>
+        public string OldDepartment { get; set; }
+        /// <summary>
         /// 部门
         /// </summary>
         public string Department { get; set; }

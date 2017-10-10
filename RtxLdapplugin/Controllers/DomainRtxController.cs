@@ -30,7 +30,7 @@ namespace RtxLdapplugin.Controllers
             }
             JavaScriptSerializer js = new JavaScriptSerializer();
             string data = js.Serialize(user);
-            if(ado.IsADUserExist(entry,user.Name))
+            if(ado.IsADUserExist(ouEntry,user.Name))
             {
                 return Json(new AjaxResult { Status = "error", Msg = "用户已经存在" });
             }
@@ -231,13 +231,28 @@ namespace RtxLdapplugin.Controllers
         {
             return View();
         }
-        public ActionResult Del()
+        public ActionResult DelUser(string userName)
         {
-            return View();
+            string filePath = Server.MapPath("~/ADConfig.xml");
+            AdOperate ado = new AdOperate(filePath);
+            DirectoryEntry entry = ado.GetEntry();
+            DirectoryEntry userEntry= ado.GetUserEntry(entry, userName);
+            ado.DelEntry(userEntry);
+            RtxUserManager rum = new RtxUserManager();
+            rum.RemoveUser(userName);
+            return Json(new AjaxResult { Status = "ok", Msg = "用户删除成功" });
         }
-        public ActionResult DelOU()
+        public ActionResult DelOUDept(string deptName)
         {
-            return View();
+            string filePath = Server.MapPath("~/ADConfig.xml");
+            AdOperate ado = new AdOperate(filePath);
+            DirectoryEntry entry = ado.GetEntry();
+            string filter = "(&(objectclass=organizationalUnit)(ou=" + deptName + "))";
+            DirectoryEntry ouEntry = ado.GetOUEntry(entry, filter);
+            ado.DelEntry(ouEntry);
+            RtxDeptManager rdm = new RtxDeptManager();
+            rdm.DelDept(deptName);
+            return Json(new AjaxResult { Status = "ok", Msg = "部门删除成功" });
         }
     }
 }

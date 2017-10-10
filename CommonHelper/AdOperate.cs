@@ -133,7 +133,11 @@ namespace CommonHelper
                 {
                     search.Filter = "(sAMAccountName=" + userName + ")";
                     //search.PropertiesToLoad.Add("cn"); //不指定加载查询属性，不会把属性查出来
-                    search.FindOne();
+                    SearchResult result= search.FindOne();
+                    if(result==null)
+                    {
+                        return false;
+                    }
                     return true;
                 }
                 catch(Exception ex)
