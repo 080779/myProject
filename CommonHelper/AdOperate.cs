@@ -406,16 +406,13 @@ namespace CommonHelper
             }
         }
 
-        public bool EditOUEntry(DirectoryEntry entry, string ouName)
+        public bool AddOUEntry(DirectoryEntry entry, string ouName)
         {
             try
             {
-                //entry.Properties["ou"].Value = ouName;
-                //entry.Properties["name"].Value = ouName;
-                entry.Rename("OU="+ouName);               
-                entry.Properties["description"].Value = ouName;
-                //entry.UsePropertyCache = true;
-                entry.CommitChanges();               
+                DirectoryEntry newOUEntry = entry.Children.Add("OU=" + ouName, "organizationalUnit");
+                newOUEntry.Properties["description"].Value = ouName;
+                newOUEntry.CommitChanges();
                 return true;
             }
             catch (Exception ex)

@@ -19,6 +19,7 @@ namespace RtxLdapplugin.Controllers
             RTX rtx = new RTX();
             rtx.FilePath = path;
             string reg= rtx.RegApp();
+            rtx.StopApp();
             string start= rtx.StartApp();
             return View((object)(path+":"+reg+":"+start));
         }

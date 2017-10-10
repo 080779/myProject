@@ -203,13 +203,13 @@ namespace TestCode
             //{
             //    Console.WriteLine("测试失败");
             //}
-            string filePath = @" F:\1708\RtxLdap\TestCode\ADConfig.xml";
-            AdOperate ado = new AdOperate(filePath);      
-            DirectoryEntry entry = ado.GetEntry();
-            if (ado.EditOUEntry(entry, "总公司"))
-                Console.WriteLine("修改成功");
-            else
-                Console.WriteLine("修改失败");
+            //string filePath = @" F:\1708\RtxLdap\TestCode\ADConfig.xml";
+            //AdOperate ado = new AdOperate(filePath);      
+            //DirectoryEntry entry = ado.GetEntry();
+            //if (ado.EditOUEntry(entry, "总公司"))
+            //    Console.WriteLine("修改成功");
+            //else
+            //    Console.WriteLine("修改失败");
             Console.ReadKey();
         }
     }

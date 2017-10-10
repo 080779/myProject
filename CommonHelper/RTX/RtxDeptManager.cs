@@ -23,7 +23,7 @@ namespace CommonHelper
         public bool AddUserToDept(string bstrUserName, string bstrSrcDeptName, string bstrDestDeptName, bool bIsCopy)
         {
             try
-            {
+            {                
                 DeptManager.AddUserToDept(bstrUserName, bstrSrcDeptName, bstrDestDeptName, bIsCopy);
                 return true;
             }
@@ -47,6 +47,19 @@ namespace CommonHelper
                 return true;
             }
             catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool SetDeptName(string bstrDeptName,string bstrNewDeptName)
+        {
+            try
+            {
+                DeptManager.SetDeptName(bstrDeptName, bstrNewDeptName);
+                return true;
+            }
+            catch(Exception ex)
             {
                 return false;
             }

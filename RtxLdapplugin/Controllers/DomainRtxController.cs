@@ -17,10 +17,11 @@ namespace RtxLdapplugin.Controllers
             //AdOperate ado = new AdOperate();
             //ado.GetADConfig(filePath, user.ComName);
             AdOperate ado = new AdOperate(filePath);
-            string domainPath = "LDAP://192.168.31.134/OU=南宁公司,DC=test,DC=com";
-            string adminUser = "Administrator";
-            string password = "Abc123456";           
-            DirectoryEntry entry= ado.GetEntry(domainPath, adminUser,password);
+            //string domainPath = "LDAP://192.168.31.134/OU=南宁公司,DC=test,DC=com";
+            //string adminUser = "Administrator";
+            //string password = "Abc123456";           
+            //DirectoryEntry entry= ado.GetEntry(domainPath, adminUser,password);
+            DirectoryEntry entry = ado.GetEntry();
             string filter = "(&(objectclass=organizationalUnit)(ou="+user.Department+"))";
             DirectoryEntry ouEntry= ado.GetOUEntry(entry, filter);
             if(ouEntry==null)
@@ -65,6 +66,49 @@ namespace RtxLdapplugin.Controllers
             //JavaScriptSerializer js = new JavaScriptSerializer();
             return Json(new AjaxResult { Status="error",Msg="想不通",Data=entry.Path+":::"+ouEntry.Path+":::"+user.Name});
         }
+
+        public ActionResult AddOUDept(string parentDeptName,string deptName)
+        {
+            string filePath = Server.MapPath("~/ADConfig.xml");
+            AdOperate ado = new AdOperate(filePath);
+            DirectoryEntry entry = ado.GetEntry();
+            string filter = "(&(objectclass=organizationalUnit)(ou=" + parentDeptName + "))";
+            DirectoryEntry ouEntry = ado.GetOUEntry(entry, filter);
+            if(!ado.AddOUEntry(ouEntry, deptName))
+            {
+                return Json(new AjaxResult {Status="error",Msg="ad域中添加部门失败" });
+            }
+            RtxDeptManager rdm = new RtxDeptManager();
+            if (!rdm.AddDept(deptName, parentDeptName))
+            {
+                filter= "(&(objectclass=organizationalUnit)(ou=" + deptName + "))";
+                ado.DelEntry(ado.GetOUEntry(entry, filter));
+                return Json(new AjaxResult { Status = "error", Msg = "RTX中添加部门失败" });                
+            }
+            return Json(new AjaxResult {Status="ok",Msg="部门同步添加成功" });
+        }
+
+        public ActionResult EditOUDept(string deptName,string newDeptName)
+        {
+            string filePath = Server.MapPath("~/ADConfig.xml");
+            AdOperate ado = new AdOperate(filePath);
+            DirectoryEntry entry = ado.GetEntry();
+            string filter = "(&(objectclass=organizationalUnit)(ou=" + deptName + "))";
+            DirectoryEntry ouEntry = ado.GetOUEntry(entry, filter);
+            if (!ado.OUEntryReName(ouEntry, newDeptName))
+            {
+                return Json(new AjaxResult { Status = "error", Msg = "ad域中编辑部门失败" });
+            }
+            RtxDeptManager rdm = new RtxDeptManager();
+            if (!rdm.SetDeptName(deptName, newDeptName))
+            {
+                filter = "(&(objectclass=organizationalUnit)(ou=" + newDeptName + "))";
+                ado.OUEntryReName(ado.GetOUEntry(entry, filter),deptName);
+                return Json(new AjaxResult { Status = "error", Msg = "RTX中编辑部门失败" });
+            }
+            return Json(new AjaxResult { Status = "ok", Msg = "部门同步编辑成功" });
+        }
+
         public ActionResult EditUser(DomainUser user)
         {
             string filePath = Server.MapPath("~/ADConfig.xml");
