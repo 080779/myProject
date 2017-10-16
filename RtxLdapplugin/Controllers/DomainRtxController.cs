@@ -126,6 +126,10 @@ namespace RtxLdapplugin.Controllers
             {
                 return Json(new AjaxResult { Status = "error", Msg = "用户不存在" });
             }
+            if(!userEntry.Path.Contains(user.Department))
+            {
+                ado.UserMoveToOU(ouEntry, userEntry);
+            }
             if(!ado.EditAccount(userEntry, user))
             {
                 return Json(new AjaxResult { Status = "error", Msg = "编辑用户到域失败" });

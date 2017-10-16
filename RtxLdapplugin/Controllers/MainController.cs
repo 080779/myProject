@@ -15,13 +15,14 @@ namespace RtxLdapplugin.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            string path = Server.MapPath("~/ADConfig.xml");
-            RTX rtx = new RTX();
-            rtx.FilePath = path;
-            string reg= rtx.RegApp();
-            rtx.StopApp();
-            string start= rtx.StartApp();
-            return View((object)(path+":"+reg+":"+start));
+            //string path = Server.MapPath("~/ADConfig.xml");
+            //RTX rtx = new RTX();
+            //rtx.FilePath = path;
+            //string reg= rtx.RegApp();
+            //rtx.StopApp();
+            //string start= rtx.StartApp();
+            //return View((object)(path+":"+reg+":"+start));
+            return View();
         }
         public ActionResult Delete(string userName)
         {

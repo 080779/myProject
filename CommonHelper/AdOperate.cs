@@ -425,6 +425,19 @@ namespace CommonHelper
             }
         }
 
+        public bool UserMoveToOU(DirectoryEntry moveToEntry, DirectoryEntry userEntry)
+        {
+            try
+            {
+                userEntry.MoveTo(moveToEntry);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public bool OUEntryReName(DirectoryEntry entry,string newName)
         {
             try
